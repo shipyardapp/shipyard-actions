@@ -1,11 +1,8 @@
 FROM python:3.9-slim
 
-WORKDIR /usr/src/app
-
+WORKDIR /app
 COPY . .
-
+COPY trigger_fleet.py .
 RUN pip install --no-cache-dir requests pandas
 
-
-# Run script.py when the container launches
 CMD ["python", "./trigger_fleet.py"]

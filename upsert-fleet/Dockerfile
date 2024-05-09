@@ -6,4 +6,4 @@ RUN pip install --no-cache-dir requests pyyaml
 
 COPY . .
 
-CMD ["python", "./upsert_fleet.py"]
+ENTRYPOINT ["python", "/usr/src/app/upsert_fleet.py"]

@@ -7,17 +7,17 @@ inputs:
   project_id:
     description: 'Project ID'
     required: true
-  fleet_id:
-    description: 'Fleet ID'
-    required: true
   yaml_path:
     description: 'Path to the YAML file containing fleet configuration'
+    required: true
+  shipyard_api_key:
+    description: 'The API key to authenticate with Shipyard.'
     required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
+    SHIPYARD_API_KEY: ${{ inputs.shipyard_api_key }}
     ORG_ID: ${{ inputs.org_id }}
     PROJECT_ID: ${{ inputs.project_id }}
-    FLEET_ID: ${{ inputs.fleet_id }}
     YAML_PATH: ${{ inputs.yaml_path }}
