@@ -1,0 +1,41 @@
+name: 'Trigger Shipyard Fleet'
+description: 'Triggers a Shipyard fleet based on commits, PR opens, or merges in GitHub.'
+inputs:
+  org_id:
+    description: 'The organization ID in Shipyard where the fleet is located.'
+    required: true
+  project_id:
+    description: 'The project ID within the organization in Shipyard.'
+    required: true
+  fleet_id:
+    description: 'The fleet ID that should be triggered.'
+    required: true
+  overrides:
+    description: 'JSON string of parameters to override the default fleet settings.'
+    required: false
+    default: '{}'
+  shipyard_api_key:
+    description: 'The API key to authenticate with Shipyard.'
+    required: true
+  wait_for_run:
+    description: 'Whether to wait for the fleet run to complete before finishing the action. This will return a failure if the fleet run Errors.'
+    required: false
+    default: false
+  wait_time:
+    description: 'The amount of time in seconds to recheck the fleet run status if wait_for_run is set to true.'
+    required: false
+    default: '5'
+outputs:
+  status:
+    description: 'The status of the fleet trigger operation.'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    ORG: ${{ inputs.org_id }}
+    PROJECT: ${{ inputs.project_id }}
+    FLEET_ID: ${{ inputs.fleet_id }}
+    OVERRIDES: ${{ inputs.overrides }}
+    SHIPYARD_API_KEY: ${{ inputs.shipyard_api_key }}
+
