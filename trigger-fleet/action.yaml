@@ -39,5 +39,3 @@ runs:
     SHIPYARD_API_KEY: ${{ inputs.shipyard_api_key }}
     WAIT_FOR_RUN: ${{ inputs.wait_for_run }}
     WAIT_TIME: ${{ inputs.wait_time }}
-
-
