@@ -20,11 +20,11 @@ inputs:
   wait_for_run:
     description: 'Whether to wait for the fleet run to complete before finishing the action. This will return a failure if the fleet run Errors.'
     required: false
-    default: false
+    default: 'false'
   wait_time:
     description: 'The amount of time in seconds to recheck the fleet run status if wait_for_run is set to true.'
     required: false
-    default: 5
+    default: '5'
 outputs:
   status:
     description: 'The status of the fleet trigger operation.'
@@ -32,7 +32,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    --organization-id ${{ inputs.org_id }}
-    --project-id ${{ inputs.1project_id }}
-    --fleet-id ${{ inputs.fleet_id }}
-    --api-key ${{ inputs.shipyard_api_key }}
+    - '--organization-id=${{ inputs.org_id }}'
+    - '--project-id=${{ inputs.project_id }}'
+    - '--fleet-id=${{ inputs.fleet_id }}'
+    - '--api-key=${{ inputs.shipyard_api_key }}'
