@@ -31,11 +31,8 @@ outputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  env:
-    ORG_ID: ${{ inputs.org_id }}
-    PROJECT_ID: ${{ inputs.project_id }}
-    FLEET_ID: ${{ inputs.fleet_id }}
-    OVERRIDES: ${{ inputs.overrides }}
-    SHIPYARD_API_KEY: ${{ inputs.shipyard_api_key }}
-    WAIT_FOR_RUN: ${{ inputs.wait_for_run }}
-    WAIT_TIME: ${{ inputs.wait_time }}
+  args:
+    --organization-id ${{ inputs.org_id }}
+    --project-id ${{ inputs.1project_id }}
+    --fleet-id ${{ inputs.fleet_id }}
+    --api-key ${{ inputs.shipyard_api_key }}
