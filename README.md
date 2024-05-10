@@ -38,19 +38,16 @@ jobs:
   trigger-fleet:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
     - name: Trigger Shipyard Fleet
       uses: shipyardapp/shipyard-actions/trigger-fleet@v1
       with:
         org_id: 'your-organization-id'
         project_id: 'your-project-id'
         fleet_id: 'your-fleet-id'
-        overrides: '{}'
+        overrides: '{Variable1: Value1, Variable2: Value2}'
         shipyard_api_key: ${{ secrets.SHIPYARD_API_KEY }}
         wait_for_run: 'false'
-        wait_time: '5'
+        wait_time: 5
 ```
 Replace your-organization-id, your-project-id, and your-fleet-id with the actual IDs from your Shipyard setup.
 

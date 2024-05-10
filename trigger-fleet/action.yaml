@@ -24,18 +24,20 @@ inputs:
   wait_time:
     description: 'The amount of time in seconds to recheck the fleet run status if wait_for_run is set to true.'
     required: false
-    default: '5'
+    default: 5
 outputs:
   status:
     description: 'The status of the fleet trigger operation.'
-
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    ORG: ${{ inputs.org_id }}
-    PROJECT: ${{ inputs.project_id }}
+    ORG_ID: ${{ inputs.org_id }}
+    PROJECT_ID: ${{ inputs.project_id }}
     FLEET_ID: ${{ inputs.fleet_id }}
     OVERRIDES: ${{ inputs.overrides }}
     SHIPYARD_API_KEY: ${{ inputs.shipyard_api_key }}
+    WAIT_FOR_RUN: ${{ inputs.wait_for_run }}
+    WAIT_TIME: ${{ inputs.wait_time }}
+
 

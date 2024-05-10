@@ -5,15 +5,14 @@ import time
 import pandas
 import requests
 
-# BASE_URL = "https://api.app.shipyardapp.com"
+BASE_URL = "https://api.app.shipyardapp.com"
 
-BASE_URL = "https://api.int.shipyardapp.io"
 ORG_ID = os.getenv("ORG_ID")
 PROJECT_ID = os.getenv("PROJECT_ID")
 FLEET_ID = os.getenv("FLEET_ID")
 OVERRIDES = os.getenv("OVERRIDES")
 API_KEY = os.environ["SHIPYARD_API_KEY"]
-WAIT_TIME = os.getenv("WAIT_TIME", 5)
+WAIT_TIME = int(os.getenv("WAIT_TIME", 5))
 WAIT_FOR_RUN = os.getenv("WAIT_FOR_RUN", "false").lower() == "true"
 
 HEADERS = {
@@ -37,7 +36,6 @@ def get_run_status(run_id):
 
 
 def trigger_fleet_run():
-
     if OVERRIDES:
         print("Triggering fleet run with overrides")
         response = requests.post(f"{BASE_URL}/orgs/{ORG_ID}/projects/{PROJECT_ID}/fleets/{FLEET_ID}/fleetruns",
@@ -58,18 +56,20 @@ def trigger_fleet_run():
         print(response.content)
         exit(1)
 
-run_id = trigger_fleet_run().get("data").get("fleet_run_id")
-if WAIT_FOR_RUN:
 
-    while True:
-        time.sleep(WAIT_TIME)
-        status = get_run_status(run_id)
-        print(f"Run status: {status}")
+if __name__ == "__main__":
+    run_id = trigger_fleet_run().get("data").get("fleet_run_id")
+    if WAIT_FOR_RUN:
 
-        if status in COMPLETED_STATUSES:
-            print("Run completed")
-            if status != "Success":
-                exit(1)
-            break
+        while True:
+            time.sleep(WAIT_TIME)
+            status = get_run_status(run_id)
+            print(f"Run status: {status}")
 
-        print("Waiting for run to complete...")
+            if status in COMPLETED_STATUSES:
+                print("Run completed")
+                if status != "Success":
+                    exit(1)
+                break
+
+            print("Waiting for run to complete...")

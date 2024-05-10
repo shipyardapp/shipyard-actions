@@ -4,11 +4,11 @@ import sys
 import requests
 import yaml
 
-BASE_URL = "https://api.staging.shipyardapp.io"
+BASE_URL = "https://api.app.shipyardapp.com"
 ORG_ID = os.getenv("ORG_ID")
 PROJECT_ID = os.getenv("PROJECT_ID")
 API_KEY = os.environ["SHIPYARD_API_KEY"]
-YAML_PATH = os.getenv("YAML_PATH")  # Get the path from environment variables
+YAML_PATH = os.getenv("YAML_PATH")
 
 
 def upsert_fleet():
@@ -20,14 +20,12 @@ def upsert_fleet():
         "X-Shipyard-API-Key": API_KEY
     }
 
-    # Load YAML from the specified file path
     with open(YAML_PATH, 'r') as file:
         data = yaml.safe_load(file)
 
     response = requests.put(url, headers=headers, data=yaml.dump(data), timeout=30)
     if response.ok:
         print("Fleet upserted successfully")
-        print(response.text)
     else:
         print("Fleet upsert failed")
         print(response.content)
