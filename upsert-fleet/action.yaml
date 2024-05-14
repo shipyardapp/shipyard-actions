@@ -16,8 +16,8 @@ inputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  env:
-    SHIPYARD_API_KEY: ${{ inputs.shipyard_api_key }}
-    ORG_ID: ${{ inputs.org_id }}
-    PROJECT_ID: ${{ inputs.project_id }}
-    YAML_PATH: ${{ inputs.yaml_path }}
+  args:
+    - '--organization-id=${{ inputs.org_id }}'
+    - '--project-id=${{ inputs.project_id }}'
+    - '--yaml-path=${{ inputs.yaml_path }}'
+    - '--api-key=${{ inputs.shipyard_api_key }}'

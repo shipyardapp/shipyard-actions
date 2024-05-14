@@ -24,7 +24,7 @@ def main():
 
     client = ShipyardClient(org_id=args.org_id, api_key=args.api_key, project_id=args.project_id)
 
-    run_id = client.trigger_fleet_run(fleet_id=args.fleet_id,
+    run_id = client.trigger_fleet(fleet_id=args.fleet_id,
                                       fleet_overrides=args.overrides).get("data").get("fleet_run_id")
     if args.wait_for_run:
 
