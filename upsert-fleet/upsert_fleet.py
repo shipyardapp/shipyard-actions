@@ -1,29 +1,28 @@
-import os
+import argparse
 import sys
 
-import requests
 import yaml
-
-BASE_URL = "https://api.app.shipyardapp.com"
-ORG_ID = os.getenv("ORG_ID")
-PROJECT_ID = os.getenv("PROJECT_ID")
-API_KEY = os.environ["SHIPYARD_API_KEY"]
-YAML_PATH = os.getenv("YAML_PATH")
+from shipyard_api import ShipyardClient
 
 
-def upsert_fleet():
-    url = f"{BASE_URL}/orgs/{ORG_ID}/projects/{PROJECT_ID}/fleets"
 
-    headers = {
-        "accept": "application/json",
-        "content-type": "application/yaml",
-        "X-Shipyard-API-Key": API_KEY
-    }
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--organization-id", dest="org_id", required=True)
+    parser.add_argument("--api-key", dest="api_key", required=True)
+    parser.add_argument("--project-id", dest="project_id", required=True)
+    parser.add_argument("--yaml-path", dest="yaml_path", required=True)
+    return parser.parse_args()
 
-    with open(YAML_PATH, 'r') as file:
+
+def main():
+    args = get_args()
+    client = ShipyardClient(org_id=args.org_id, api_key=args.api_key, project_id=args.project_id)
+
+    with open(args.yaml_path, 'r') as file:
         data = yaml.safe_load(file)
 
-    response = requests.put(url, headers=headers, data=yaml.dump(data), timeout=30)
+    response = client.upsert_fleet(data)
     if response.ok:
         print("Fleet upserted successfully")
     else:
@@ -33,4 +32,4 @@ def upsert_fleet():
 
 
 if __name__ == "__main__":
-    upsert_fleet()
+    main()

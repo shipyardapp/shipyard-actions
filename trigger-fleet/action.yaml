@@ -36,3 +36,6 @@ runs:
     - '--project-id=${{ inputs.project_id }}'
     - '--fleet-id=${{ inputs.fleet_id }}'
     - '--api-key=${{ inputs.shipyard_api_key }}'
+    - '--overrides=${{ inputs.overrides }}'
+    - '--wait-for-run=${{ inputs.wait_for_run }}'
+    - '--wait-time=${{ inputs.wait_time }}'
