@@ -1,0 +1,23 @@
+name: 'Upsert Fleet'
+description: 'Upsert a fleet configuration in Shipyard using a YAML file.'
+inputs:
+  org_id:
+    description: 'Organization ID'
+    required: true
+  project_id:
+    description: 'Project ID'
+    required: true
+  yaml_path:
+    description: 'Path to the YAML file containing fleet configuration'
+    required: true
+  shipyard_api_key:
+    description: 'The API key to authenticate with Shipyard.'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - '--organization-id=${{ inputs.org_id }}'
+    - '--project-id=${{ inputs.project_id }}'
+    - '--yaml-path=${{ inputs.yaml_path }}'
+    - '--api-key=${{ inputs.shipyard_api_key }}'
